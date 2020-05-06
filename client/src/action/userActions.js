@@ -1,16 +1,25 @@
-import {userLogin} from "../socket/userSocketHandler";
+import {emitUserLogin} from "../socket/userSocketHandler";
 
 export const SET_USERNAME = "SET_USERNAME";
-export const SET_USER_ID = "SET_USER_ID";
+export const USER_JOIN = "USER_JOIN";
 
-const setUsernameAction = (name) => ({
-    type: SET_USERNAME,
-    name
-});
-
-export const setUsername = (name) => {
+export const setUsername = (name, image) => {
     return (dispatch) => {
-        dispatch(setUsernameAction(name));
-        userLogin(name)
+        dispatch({
+            type: SET_USERNAME,
+            name,
+            image
+        });
+
+        emitUserLogin(name, image)
+    }
+};
+
+export const userJoin = (data) => {
+    return (dispatch) => {
+        dispatch({
+            type: USER_JOIN,
+            ...data
+        });
     }
 };

@@ -18,12 +18,12 @@ const darkTheme = createMuiTheme({
 
 ReactDOM.render(
     <Provider store={store}>
-        <SnackbarProvider>
-            <MuiThemeProvider theme={darkTheme}>
+        <MuiThemeProvider theme={darkTheme}>
+            <SnackbarProvider>
                 <CssBaseline/>
                 <MainContainer/>
-            </MuiThemeProvider>
-        </SnackbarProvider>
+            </SnackbarProvider>
+        </MuiThemeProvider>
     </Provider>,
     document.getElementById('root')
 );

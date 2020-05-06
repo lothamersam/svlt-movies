@@ -11,11 +11,12 @@ import {setUsername} from "../action/userActions";
 
 export const LoginDialog = () => {
     const [name, setName] = useState("");
+    const [image, setImage] = useState("");
     const loggedIn = useSelector(state => state.users.loggedIn);
     const dispatch = useDispatch();
 
     return <Dialog open={!loggedIn}>
-        <DialogTitle>Enter your Name</DialogTitle>
+        <DialogTitle>Enter your stuff!</DialogTitle>
         <DialogContent>
             <DialogContentText>
                 Pick something fun!
@@ -28,11 +29,19 @@ export const LoginDialog = () => {
                 type="name"
                 value={name}
                 onChange={event => setName(event.target.value)}
-                fullWidth
-            />
+                fullWidth/>
+            <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Name"
+                type="name"
+                value={image}
+                onChange={event => setImage(event.target.value)}
+                fullWidth/>
         </DialogContent>
         <DialogActions>
-            <Button color="primary" onClick={() => setUsername(name)(dispatch)}>
+            <Button variant={"contained"} color="primary" onClick={() => setUsername(name, image)(dispatch)}>
                 Set
             </Button>
         </DialogActions>
