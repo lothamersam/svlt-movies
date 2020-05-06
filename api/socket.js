@@ -5,7 +5,6 @@ const users = {};
 
 conn.on('connection', (socket) => {
     console.log(`CONN ${socket.id}: OPENED`);
-    users[socket.id] = {};
 
     socket.on('userLogin', (data) => {
         console.log(`CONN ${socket.id}: SET USERNAME - ${data.username}, SET IMAGE - ${data.image}`);
