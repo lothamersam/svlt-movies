@@ -32,6 +32,7 @@ class UserSubscriberClass extends React.Component {
 }
 
 export const UserSubscriber = withSnackbar(connect(undefined, {userJoin})(UserSubscriberClass));
+
 UserSubscriber.propTypes = {
     userJoin: PropTypes.func,
     enqueueSnackbar: PropTypes.func,

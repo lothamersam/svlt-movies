@@ -8,7 +8,7 @@ import {getMovies, onNewMovie, selectMovie} from "../action/movieActions";
 import PropTypes from "prop-types";
 import {withSnackbar} from "notistack";
 import Skeleton from "@material-ui/lab/Skeleton";
-import {MovieEditor} from "../component/movie/MovieEditor";
+import {Movie} from "../component/movie/Movie";
 
 class MainContainerClass extends React.Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class MainContainerClass extends React.Component {
         <UserSubscriber>
             <LoginDialog/>
             <MovieDrawer selectMovie={this.props.selectMovie}>
-                {this.props.selected.id ? <MovieEditor/> : <Skeleton/>}
+                {this.props.selected.id ? <Movie/> : <Skeleton/>}
             </MovieDrawer>
         </UserSubscriber>
     )

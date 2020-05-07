@@ -17,7 +17,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 import QueuePlayNextIcon from '@material-ui/icons/QueuePlayNext';
-import {NewMovieDialog} from "./NewMovieDialog";
+import {NewMovieDialog} from "./movie/NewMovieDialog";
 import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 

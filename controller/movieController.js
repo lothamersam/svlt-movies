@@ -35,8 +35,23 @@ const getMovie = async (req, res) => {
     }
 };
 
+const addCriteria = async (req, res) => {
+    try {
+        const criteria = await models.Criteria.create({
+            name: req.body.name,
+            movieId: req.params["id"]
+        });
+
+        conn.in(req.params["id"]).emit('newCriteria', {criteria});
+        return res.status(200).json(criteria);
+    } catch (error) {
+        return res.status(500).json({error: error.message})
+    }
+};
+
 module.exports = {
     addMovie,
     getMovies,
-    getMovie
+    getMovie,
+    addCriteria
 };

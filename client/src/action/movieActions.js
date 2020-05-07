@@ -2,7 +2,6 @@ import axios from "axios";
 import {emitChange, emitMovieJoin} from "../socket/movieSocketHandler";
 
 export const CHANGE = "CHANGE";
-export const ON_CHANGE = "ON_CHANGE";
 export const ON_FOCUS = "ON_FOCUS";
 export const ON_ADD = "ON_ADD";
 export const ON_DELETE = "ON_DELETE";
@@ -13,6 +12,7 @@ export const changeMovie = (field, value, received) => {
 
         dispatch({
             type: CHANGE,
+            id: movie.selected.id,
             field,
             value
         });
@@ -29,10 +29,7 @@ export const SELECT_MOVIE = "SELECT_MOVIE";
 
 export const onNewMovie = (data) => {
     return (dispatch) => {
-        dispatch({
-            type: NEW_MOVIE,
-            ...data
-        })
+        dispatch({type: NEW_MOVIE, ...data})
     }
 };
 
@@ -59,8 +56,22 @@ export const selectMovie = (id) => {
     }
 };
 
+export const NEW_CRITERIA = "NEW_CRITERIA";
+
+export const newCriteria = (data) => {
+    return (dispatch) => {
+        dispatch({type: NEW_CRITERIA, ...data})
+    }
+};
+
 export const addNewMovie = (name, image, user) => {
     axios.post('/api', {movie: {name, image}, user: user})
         .then(res => console.log('Added movie!', res))
         .catch(err => console.log('Failed adding movie!', err));
+};
+
+export const addNewCriteria = (id, name) => {
+    axios.post(`/api/${id}`, {name})
+        .then(res => console.log('Added movie!', res))
+        .catch(err => console.log('Failed adding movie!', err))
 };

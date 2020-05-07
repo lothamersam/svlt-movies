@@ -9,6 +9,10 @@ export const subscribeToChange = (callback) => {
     socket.on('onChange', data => callback(data))
 };
 
+export const subscribeToNoNewCriteria = (callback) => {
+    socket.on('newCriteria', data => callback(data));
+};
+
 export const emitMovieJoin = (id) => {
     socket.emit('joinMovie', id)
 };
@@ -20,4 +24,4 @@ export const emitChange = throttle((id, type, field, value) => {
         field,
         value
     })
-}, 500);
+}, 1000);
