@@ -20,6 +20,7 @@ import QueuePlayNextIcon from '@material-ui/icons/QueuePlayNext';
 import {NewMovieDialog} from "./movie/NewMovieDialog";
 import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const drawerWidth = 300;
 
@@ -126,8 +127,14 @@ export const MovieDrawer = (props) => {
                     </Typography>
                     <div className={classes.grow}/>
                     <AvatarGroup max={2} classes={{avatar: classes.avatar}}>
-                        <Avatar src={currentUser.image} alt={currentUser.name}/>
-                        {Object.entries(users).map(e => <Avatar key={e[1]} src={e[1].image} alt={e[1].name}/>)}
+                        <Tooltip title={currentUser.name}>
+                            <Avatar src={currentUser.image} alt={currentUser.name}/>
+                        </Tooltip>
+                        {Object.entries(users).map(e => (
+                            <Tooltip title={e[1].name}>
+                                <Avatar key={e[1]} src={e[1].image} alt={e[1].name}/>
+                            </Tooltip>
+                        ))}
                     </AvatarGroup>
                 </Toolbar>
             </AppBar>
