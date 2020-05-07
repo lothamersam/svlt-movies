@@ -8,18 +8,23 @@ import PropTypes from "prop-types";
 class UserSubscriberClass extends React.Component {
     constructor(props) {
         super(props);
+        subscribeToUserJoin(this.userJoinSubscriber);
+        subscribeToUserList(this.userListSubscriber)
+    }
 
-        subscribeToUserJoin((data) => {
-            this.props.userJoin(data);
-            this.props.enqueueSnackbar(`${data.username} joined!`)
-        });
+    userJoinSubscriber = (data) => {
+        this.props.userJoin(data);
+        this.props.enqueueSnackbar(`${data.username} joined!`)
+    };
 
-        subscribeToUserList((data) => {
-            const users = Object.entries(data);
+    userListSubscriber = (data) => {
+        const users = Object.entries(data);
+
+        if (users.length > 0) {
             users.map(([, value]) => this.props.userJoin(value));
             this.props.enqueueSnackbar(`${users[0][1].username} is here with ${users.length} other(s)!`)
-        })
-    }
+        }
+    };
 
     render = () => <div>
         {this.props.children}

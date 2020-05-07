@@ -1,12 +1,23 @@
 import {socket} from "./socket"
-import axios from "axios";
+import {throttle} from "lodash";
 
 export const subscribeToNewMovie = (callback) => {
     socket.on('newMovie', data => callback(data))
 };
 
-export const emitNewMovie = (name, image, user) => {
-    axios.post('/api', {movie: {name, image}, user: user})
-        .then(res => console.log('Added movie!', res))
-        .catch(err => console.log('Failed adding movie!', err));
+export const subscribeToChange = (callback) => {
+    socket.on('onChange', data => callback(data))
 };
+
+export const emitMovieJoin = (id) => {
+    socket.emit('joinMovie', id)
+};
+
+export const emitChange = throttle((id, type, field, value) => {
+    socket.emit('change', {
+        id,
+        type,
+        field,
+        value
+    })
+}, 1000);

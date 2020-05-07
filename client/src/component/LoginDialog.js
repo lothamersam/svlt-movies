@@ -22,7 +22,6 @@ export const LoginDialog = () => {
                 Pick something fun!
             </DialogContentText>
             <TextField
-                autoFocus
                 margin="dense"
                 id="name"
                 label="Name"
@@ -31,10 +30,9 @@ export const LoginDialog = () => {
                 onChange={event => setName(event.target.value)}
                 fullWidth/>
             <TextField
-                autoFocus
                 margin="dense"
                 id="name"
-                label="Name"
+                label="Profile Image"
                 type="name"
                 value={image}
                 onChange={event => setImage(event.target.value)}

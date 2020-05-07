@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
-import {emitNewMovie} from "../socket/movieSocketHandler";
+import {addNewMovie} from "../action/movieActions";
 
 export const NewMovieDialog = (props) => {
     const [name, setName] = useState("");
@@ -15,7 +15,7 @@ export const NewMovieDialog = (props) => {
     const user = useSelector(state => state.users.currentUser.name);
 
     const onClose = () => {
-        emitNewMovie(name, image, user);
+        addNewMovie(name, image, user);
         props.onClose()
     };
 

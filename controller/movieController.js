@@ -1,5 +1,5 @@
 const models = require('../database/models');
-const conn = require('../api/socket').conn
+const conn = require('../api/socket').conn;
 
 const addMovie = async (req, res) => {
     try {
@@ -19,7 +19,24 @@ const getMovies = async (req, res) => {
         return res.status(500).json({error: error.message})
     }
 };
+
+const getMovie = async (req, res) => {
+    try {
+        const movie = await models.Movie.findOne({
+            where: {id: req.params["id"]},
+            include: {
+                model: models.Criteria,
+                as: "criteria"
+            }
+        });
+        return res.status(200).json({movie});
+    } catch (error) {
+        return res.status(500).json({error: error.message})
+    }
+};
+
 module.exports = {
     addMovie,
-    getMovies
+    getMovies,
+    getMovie
 };

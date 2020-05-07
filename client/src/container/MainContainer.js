@@ -4,10 +4,11 @@ import {LoginDialog} from "../component/LoginDialog";
 import {UserSubscriber} from "../component/subscribers/UserSubscriber";
 import {subscribeToNewMovie} from "../socket/movieSocketHandler";
 import {MovieDrawer} from "../component/MovieDrawer";
-import Typography from "@material-ui/core/Typography";
-import {onNewMovie, getMovies, selectMovie} from "../action/movieActions";
+import {getMovies, onNewMovie, selectMovie} from "../action/movieActions";
 import PropTypes from "prop-types";
 import {withSnackbar} from "notistack";
+import Skeleton from "@material-ui/lab/Skeleton";
+import {MovieEditor} from "../component/movie/MovieEditor";
 
 class MainContainerClass extends React.Component {
     constructor(props) {
@@ -26,14 +27,14 @@ class MainContainerClass extends React.Component {
         <UserSubscriber>
             <LoginDialog/>
             <MovieDrawer selectMovie={this.props.selectMovie}>
-                <Typography>wow</Typography>
+                {this.props.selected.id ? <MovieEditor/> : <Skeleton/>}
             </MovieDrawer>
         </UserSubscriber>
     )
 }
 
 const mapStateToProps = (state) => ({
-    loggedIn: state.users.loggedIn
+    selected: state.movie.selected
 });
 
 export const MainContainer = withSnackbar(connect(mapStateToProps, {
@@ -43,6 +44,7 @@ export const MainContainer = withSnackbar(connect(mapStateToProps, {
 })(MainContainerClass));
 
 MainContainer.propTypes = {
+    selected: PropTypes.object,
     getMovies: PropTypes.func,
     enqueueSnackbar: PropTypes.func,
     onNewMovie: PropTypes.func,

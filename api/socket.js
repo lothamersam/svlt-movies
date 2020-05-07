@@ -1,7 +1,9 @@
 const io = require('socket.io')();
 const conn = io.of('/conn');
+const models = require('../database/models');
 
 const users = {};
+const movies = {};
 
 conn.on('connection', (socket) => {
     console.log(`CONN ${socket.id}: OPENED`);
@@ -18,8 +20,30 @@ conn.on('connection', (socket) => {
         });
     });
 
-    socket.on('disconnection', () => {
-       console.log(`CONN ${socket.id}: LOST`)
+    socket.on('joinMovie', (data) => {
+        console.log(`CONN ${socket.id}: JOIN ${data}`);
+
+        users[socket.id].room = data;
+        socket.join(data)
+    });
+
+    socket.on('change', async (data) => {
+        try {
+            if (data.type === 0) {
+                const [updated] = await models.Movie.update({[data.field]: data.value}, {
+                    where: {id: data.id}
+                });
+
+                socket.to(users[socket.id].room).emit('onChange', data);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
+    socket.on('disconnect', () => {
+        console.log(`CONN ${socket.id}: LOST`);
+        delete users[socket.id]
     });
 });
 

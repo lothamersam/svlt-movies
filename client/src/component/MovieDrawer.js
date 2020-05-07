@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,18 +14,21 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 import QueuePlayNextIcon from '@material-ui/icons/QueuePlayNext';
 import {NewMovieDialog} from "./NewMovieDialog";
 import Avatar from "@material-ui/core/Avatar";
+import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+    },
+    grow: {
+        flexGrow: 1
     },
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
@@ -78,13 +81,17 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: 0,
     },
+    avatar: {
+        border: "1.5px solid #ffffff"
+    }
 }));
 
 export const MovieDrawer = (props) => {
     const classes = useStyles();
     const [adding, setAdding] = React.useState(false);
     const [open, setOpen] = React.useState(true);
-    const movies = useSelector(state => state.movie.movies);
+    const {movies, selected} = useSelector(state => state.movie);
+    const {currentUser, users} = useSelector(state => state.users);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -92,6 +99,11 @@ export const MovieDrawer = (props) => {
 
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+
+    const onClick = key => {
+        setOpen(false);
+        props.selectMovie(key)
     };
 
     return (
@@ -110,8 +122,13 @@ export const MovieDrawer = (props) => {
                         <MenuIcon/>
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        Persistent drawer
+                        {selected.name ? selected.name : 'Select a movie'}
                     </Typography>
+                    <div className={classes.grow}/>
+                    <AvatarGroup max={2} classes={{avatar: classes.avatar}}>
+                        <Avatar src={currentUser.image} alt={currentUser.name}/>
+                        {Object.entries(users).map(e => <Avatar key={e[1]} src={e[1].image} alt={e[1].name}/>)}
+                    </AvatarGroup>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -133,8 +150,8 @@ export const MovieDrawer = (props) => {
                     </ListItem>
                     <Divider/>
                     {Object.entries(movies).map(([key, value]) => (
-                        <ListItem button key={key} onClick={() => props.selectMovie(key)}>
-                            <ListItemIcon><Avatar src={value.image} alt={value.name} /></ListItemIcon>
+                        <ListItem button key={key} onClick={() => onClick(key)}>
+                            <ListItemIcon><Avatar src={value.image} alt={value.name}/></ListItemIcon>
                             <ListItemText primary={value.name}/>
                         </ListItem>
                     ))}
