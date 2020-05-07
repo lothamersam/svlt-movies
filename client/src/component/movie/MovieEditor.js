@@ -28,7 +28,6 @@ class MovieEditorClass extends React.Component {
                 onChange={(event) => this.onChange('link', event)}
                 fullWidth/>
             <TextField
-                rows={5}
                 multiline
                 margin="dense"
                 id="description"
