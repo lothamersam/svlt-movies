@@ -20,4 +20,4 @@ export const emitChange = throttle((id, type, field, value) => {
         field,
         value
     })
-}, 1000);
+}, 500);

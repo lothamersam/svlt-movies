@@ -23,10 +23,28 @@ class MovieEditorClass extends React.Component {
             <TextField
                 margin="dense"
                 id="name"
-                label="Profile Image"
+                label="Movie Title"
                 type="name"
                 value={this.props.selected.name}
                 onChange={(event) => this.onChange('name', event)}
+                fullWidth/>
+            <TextField
+                margin="dense"
+                id="name"
+                label="Watch Link"
+                type="name"
+                value={this.props.selected.link}
+                onChange={(event) => this.onChange('link', event)}
+                fullWidth/>
+            <TextField
+                rows={5}
+                multiline
+                margin="dense"
+                id="name"
+                label="Description"
+                type="name"
+                value={this.props.selected.description}
+                onChange={(event) => this.onChange('description', event)}
                 fullWidth/>
         </MovieSubscriber>
     }
