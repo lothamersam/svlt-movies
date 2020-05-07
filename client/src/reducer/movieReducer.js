@@ -16,7 +16,7 @@ const selectMovie = (state, action) => {
         selected: action.movie,
         fields
     };
-}
+};
 
 const change = (state, action) => {
     return {
@@ -39,7 +39,7 @@ const newEntry = (key, state, action) => {
     return {
         ...state,
         [key]: {
-            ...state.fields,
+            ...state[key],
             [action.id]: {
                 name: action.name
             }

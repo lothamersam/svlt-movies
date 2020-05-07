@@ -30,7 +30,9 @@ class MovieClass extends React.Component {
             <Button
                 className={this.props.classes.right}
                 variant={"contained"}
-                onClick={() => this.setState({open: true})}>Add Criteria</Button>
+                onClick={() => this.setState({open: true})}>
+                Add Criteria
+            </Button>
             <NewCriteriaDialog open={this.state.open} onClose={() => this.setState({open: false})}/>
             <MovieEditor/>
             <CriteriaList/>
