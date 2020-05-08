@@ -32,6 +32,7 @@ export const FieldUserList = ({fieldId}) => {
                         <Avatar className={classes.small} src={user.image} alt={user.username}/>
                     </Tooltip>
                 } else {
+                    // user is not here anymore
                     focusCriteria(fieldId, 0, key, true)(dispatch);
                 }
             })}

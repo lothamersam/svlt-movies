@@ -38,6 +38,7 @@ export const usersReducer = (state = initialState, action) => {
                 }
             };
         case USER_LEAVE:
+            // TODO notify field subscribers
             delete state.users[action.id];
             return {...state};
         default:

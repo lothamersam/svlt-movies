@@ -2,9 +2,6 @@ import axios from "axios";
 import {emitChange, emitFocus, emitMovieJoin} from "../socket/movieSocketHandler";
 
 export const CHANGE = "CHANGE";
-export const FOCUS = "ON_FOCUS";
-export const ON_ADD = "ON_ADD";
-export const ON_DELETE = "ON_DELETE";
 
 export const changeMovie = (field, value, received) => {
     return (dispatch, getState) => {

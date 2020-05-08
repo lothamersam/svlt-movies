@@ -7,13 +7,13 @@ import Paper from "@material-ui/core/Paper";
 import {withStyles} from "@material-ui/core";
 
 const useStyles = (theme) => ({
-   root: {
-       padding: theme.spacing(2),
-       margin: theme.spacing(2, 0),
-       '& > *': {
-           margin: theme.spacing(1, 0)
-       }
-   }
+    root: {
+        padding: theme.spacing(2),
+        margin: theme.spacing(2, 0),
+        '& > *': {
+            margin: theme.spacing(1, 0)
+        }
+    }
 });
 
 class MovieEditorClass extends React.Component {
@@ -48,12 +48,10 @@ class MovieEditorClass extends React.Component {
 
 const mapStateToProps = (state) => ({
     selected: state.movie.selected,
-    fields: state.movie.fields
 });
 
 export const MovieEditor = withStyles(useStyles)(connect(mapStateToProps, {changeMovie})(MovieEditorClass));
 
 MovieEditor.propTypes = {
     selected: PropTypes.object,
-    fields: PropTypes.object
 };

@@ -1,5 +1,5 @@
 const models = require('../database/models');
-const conn = require('../api/socket').conn;
+const conn = require('./socketHandler').conn;
 
 const addMovie = async (req, res) => {
     try {

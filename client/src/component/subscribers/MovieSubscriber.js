@@ -47,5 +47,6 @@ export const MovieSubscriber = connect(undefined, {
 MovieSubscriber.propTypes = {
     changeMovie: PropTypes.func,
     newCriteria: PropTypes.func,
-    changeCriteria: PropTypes.func
+    changeCriteria: PropTypes.func,
+    focusCriteria: PropTypes.func
 };

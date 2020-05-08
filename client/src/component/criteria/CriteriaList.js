@@ -6,7 +6,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
-import {UserIcon} from "../user/UserIcon";
 import {focusCriteria} from "../../action/movieActions";
 import {FieldUserList} from "../user/FieldUserList";
 
@@ -50,7 +49,7 @@ export const CriteriaList = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const {fields} = useSelector(state => state.movie);
-    const {users, currentUser} = useSelector(state => state.users);
+    const {currentUser} = useSelector(state => state.users);
     const [value, setValue] = React.useState(fields ? Object.keys(fields)[0] : 0);
 
     const handleChange = (event, newValue) => {

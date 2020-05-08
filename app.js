@@ -12,8 +12,8 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/api/', require('./api/movie'));
-app.io = require('./api/socket').io;
+app.use('/api/', require('./api/movieRoutes'));
+app.io = require('./api/socketHandler').io;
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname+'/client/build/index.html'));

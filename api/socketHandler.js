@@ -33,11 +33,11 @@ conn.on('connection', (socket) => {
             socket.to(users[socket.id].room).emit('onChange', data);
             const model = data.type === 0 ? models.Movie : models.Criteria;
 
-            const [updated] = await model.update({[data.field]: data.value}, {
+            await model.update({[data.field]: data.value}, {
                 where: {id: data.id}
             });
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
     });
 

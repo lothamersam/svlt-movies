@@ -7,7 +7,6 @@ import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
 import {NewMovieDialog} from "./movie/NewMovieDialog";
 import {NewCriteriaDialog} from "./criteria/NewCriteriaDialog";
 import PostAddIcon from '@material-ui/icons/PostAdd';
-import {MovieSubscriber} from "./subscribers/MovieSubscriber";
 import {useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({

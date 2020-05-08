@@ -63,6 +63,7 @@ export const UserSubscriber = withSnackbar(connect(undefined, {
 })(UserSubscriberClass));
 
 UserSubscriber.propTypes = {
+    userId: PropTypes.func,
     userJoin: PropTypes.func,
     userLeave: PropTypes.func,
     enqueueSnackbar: PropTypes.func,
