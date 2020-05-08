@@ -34,6 +34,7 @@ export const FieldUserList = ({fieldId}) => {
                 } else {
                     // user is not here anymore
                     focusCriteria(fieldId, 0, key, true)(dispatch);
+                    return <div hidden/>
                 }
             })}
         </AvatarGroup>
