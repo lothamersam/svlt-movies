@@ -30,7 +30,6 @@ class CriteriaClass extends React.Component {
             <TextField
                 label={"Points"}
                 variant={"outlined"}
-                type={"number"}
                 value={this.props.value ? this.props.value : ""}
                 onChange={(event) => this.onChange('value', event)}
                 fullWidth/>
@@ -39,7 +38,7 @@ class CriteriaClass extends React.Component {
                 label={"Notes"}
                 variant={"outlined"}
                 value={this.props.note ? this.props.note : ""}
-                onChange={(event) => this.onChange('notes', event)}
+                onChange={(event) => this.onChange('note', event)}
                 fullWidth/>
         </div>
     )

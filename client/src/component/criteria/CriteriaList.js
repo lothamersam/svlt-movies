@@ -64,7 +64,7 @@ export const CriteriaList = () => {
             variant="scrollable"
             value={value}
             onChange={handleChange}
-            aria-label="Vertical tabs example"
+            aria-label="Criteria Tabs"
             className={classes.tabs}>
             {Object.entries(fields).map(([key, value], index) => (
                 <Tab
@@ -74,7 +74,7 @@ export const CriteriaList = () => {
                     key={key} {...a11yProps(index)}/>
             ))}
         </Tabs>
-        {Object.keys(fields).map((key, index) => (
+        {Object.keys(fields).map((key) => (
             <TabPanel value={value} index={key} key={key} id={key}>
                 <Criteria id={key}/>
             </TabPanel>

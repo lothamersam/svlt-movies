@@ -81,7 +81,7 @@ const appendUser = (state, action) => ({
 });
 
 const focusCriteria = (state, action) => {
-    if (state.fields[action.value].users) {
+    if (state.fields[action.value] && state.fields[action.value].users) {
         delete state.fields[action.value].users[action.id];
         if (Object.keys(state.fields[action.value].users).length === 0) {
             delete state.fields[action.value].users
