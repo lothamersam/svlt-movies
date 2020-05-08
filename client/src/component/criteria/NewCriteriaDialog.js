@@ -13,15 +13,16 @@ export const NewCriteriaDialog = (props) => {
     const [name, setName] = useState("");
     const id = useSelector(state => state.movie.selected.id);
 
-    const onClose = () => {
+    const onClose = (event) => {
+        event.preventDefault();
         setName('');
         addNewCriteria(id, name);
-        props.onClose()
+        props.onClose();
     };
 
     return <Dialog open={props.open} onClose={() => props.onClose()} keepMounted={false}>
         <DialogTitle>Add New Criteria</DialogTitle>
-        <form>
+        <form onSubmit={onClose}>
             <DialogContent>
                 <TextField
                     label="Criteria Title"
@@ -32,7 +33,7 @@ export const NewCriteriaDialog = (props) => {
                     required/>
             </DialogContent>
             <DialogActions>
-                <Button variant={"contained"} color="primary" onClick={onClose}>
+                <Button variant={"contained"} color="primary" type={"submit"}>
                     Add
                 </Button>
             </DialogActions>

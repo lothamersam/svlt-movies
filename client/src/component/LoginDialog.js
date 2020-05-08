@@ -7,8 +7,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import {useDispatch, useSelector} from "react-redux";
-import {setUsername} from "../action/userActions";
 import {makeStyles} from "@material-ui/core/styles";
+import {setUsername} from "../action/userActions";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -27,27 +27,33 @@ export const LoginDialog = () => {
 
     return <Dialog open={!loggedIn}>
         <DialogTitle>Enter your stuff!</DialogTitle>
-        <DialogContent className={classes.root}>
-            <DialogContentText>
-                Pick something fun!
-            </DialogContentText>
-            <TextField
-                label={"Name"}
-                variant={"outlined"}
-                value={name}
-                onChange={event => setName(event.target.value)}
-                fullWidth/>
-            <TextField
-                label={"Profile Image"}
-                variant={"outlined"}
-                value={image}
-                onChange={event => setImage(event.target.value)}
-                fullWidth/>
-        </DialogContent>
-        <DialogActions>
-            <Button variant={"contained"} color="primary" onClick={() => setUsername(name, image)(dispatch)}>
-                Set
-            </Button>
-        </DialogActions>
+        <form onSubmit={(event) => {
+            event.preventDefault();
+            setUsername(name, image)(dispatch)
+        }}>
+            <DialogContent className={classes.root}>
+                <DialogContentText>
+                    Pick something fun!
+                </DialogContentText>
+                <TextField
+                    label={"Name"}
+                    variant={"outlined"}
+                    value={name}
+                    required
+                    onChange={event => setName(event.target.value)}
+                    fullWidth/>
+                <TextField
+                    label={"Profile Image"}
+                    variant={"outlined"}
+                    value={image}
+                    onChange={event => setImage(event.target.value)}
+                    fullWidth/>
+            </DialogContent>
+            <DialogActions>
+                <Button variant={"contained"} color="primary" type={"submit"}>
+                    Set
+                </Button>
+            </DialogActions>
+        </form>
     </Dialog>
 };

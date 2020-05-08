@@ -24,14 +24,15 @@ export const NewMovieDialog = (props) => {
     const [image, setImage] = useState("");
     const user = useSelector(state => state.users.currentUser.name);
 
-    const onClose = () => {
+    const onClose = (event) => {
+        event.preventDefault();
         addNewMovie(name, image, user);
         props.onClose()
     };
 
     return <Dialog open={props.open} onClose={() => props.onClose()} keepMounted={false}>
         <DialogTitle>Add New Movie</DialogTitle>
-        <form>
+        <form onSubmit={onClose}>
             <DialogContent className={classes.root}>
                 <TextField
                     label={"Movie Title"}
@@ -48,7 +49,7 @@ export const NewMovieDialog = (props) => {
                     fullWidth/>
             </DialogContent>
             <DialogActions>
-                <Button variant={"contained"} color="primary" onClick={onClose}>
+                <Button variant={"contained"} color="primary" type={"submit"}>
                     Add
                 </Button>
             </DialogActions>
