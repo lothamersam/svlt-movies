@@ -1,33 +1,60 @@
 import React from "react";
 import {connect} from "react-redux";
-import Card from "@material-ui/core/Card";
 import PropTypes from "prop-types";
-import CardContent from "@material-ui/core/CardContent";
 import {withStyles} from "@material-ui/core";
+import {changeCriteria} from "../../action/movieActions";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = theme => ({
     root: {
-        padding: theme.spacing(1)
+        padding: theme.spacing(1),
+        '& > *': {
+            margin: theme.spacing(1, 0)
+        }
     }
 });
 
 class CriteriaClass extends React.Component {
+    onChange = (name, event) => {
+        this.props.changeCriteria(this.props.id, name, event.target.value);
+    };
+
     render = () => (
-        <Card className={this.props.classes.root}>
-            <CardContent>
-                {this.props.criteria.name}
-            </CardContent>
-        </Card>
+        <div className={this.props.classes.root}>
+            <TextField
+                label={"Criteria Name"}
+                variant={"outlined"}
+                value={this.props.name ? this.props.name : ""}
+                onChange={(event) => this.onChange('name', event)}
+                fullWidth/>
+            <TextField
+                label={"Points"}
+                variant={"outlined"}
+                type={"number"}
+                value={this.props.value ? this.props.value : ""}
+                onChange={(event) => this.onChange('value', event)}
+                fullWidth/>
+            <TextField
+                multiline
+                label={"Notes"}
+                variant={"outlined"}
+                value={this.props.note ? this.props.note : ""}
+                onChange={(event) => this.onChange('notes', event)}
+                fullWidth/>
+        </div>
     )
 }
 
 const mapStateToProps = (state, props) => ({
-    criteria: state.movie.fields[props.id]
+    ...state.movie.fields[props.id]
 });
 
-export const Criteria = withStyles(useStyles)(connect(mapStateToProps)(CriteriaClass));
+export const Criteria = withStyles(useStyles)(connect(mapStateToProps, {changeCriteria})(CriteriaClass));
 
 Criteria.propTypes = {
-    criteria: PropTypes.object,
-    id: PropTypes.string
+    name: PropTypes.string,
+    value: PropTypes.any,
+    note: PropTypes.string,
+    id: PropTypes.string,
+    changeCriteria: PropTypes.func
 };

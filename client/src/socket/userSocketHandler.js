@@ -12,6 +12,19 @@ export const subscribeToUserList = (callback) => {
     });
 };
 
+export const subscribeToUserLeave = (callback) => {
+    socket.on('userLeave', (userId) => {
+        callback(userId);
+    });
+};
+
+export const subscribeToDisconnect = (callback) => {
+  socket.on('disconnect', () => {
+      socket.open();
+      callback()
+  })
+};
+
 export const emitUserLogin = (username, image) => {
     socket.emit('userLogin', {username, image})
 };

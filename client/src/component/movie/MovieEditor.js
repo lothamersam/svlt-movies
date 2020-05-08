@@ -3,6 +3,18 @@ import React from "react";
 import {connect} from "react-redux";
 import {changeMovie} from "../../action/movieActions";
 import PropTypes from "prop-types";
+import Paper from "@material-ui/core/Paper";
+import {withStyles} from "@material-ui/core";
+
+const useStyles = (theme) => ({
+   root: {
+       padding: theme.spacing(2),
+       margin: theme.spacing(2, 0),
+       '& > *': {
+           margin: theme.spacing(1, 0)
+       }
+   }
+});
 
 class MovieEditorClass extends React.Component {
     onChange = (name, event) => {
@@ -10,33 +22,27 @@ class MovieEditorClass extends React.Component {
     };
 
     render = () => (
-        <div>
+        <Paper className={this.props.classes.root}>
             <TextField
-                margin="dense"
-                id="name"
-                label="Movie Title"
-                type="name"
+                label={"Movie Title"}
+                variant={"outlined"}
                 value={this.props.selected.name}
                 onChange={(event) => this.onChange('name', event)}
                 fullWidth/>
             <TextField
-                margin="dense"
-                id="link"
-                label="Watch Link"
-                type="link"
+                label={"Watch Link"}
+                variant={"outlined"}
                 value={this.props.selected.link}
                 onChange={(event) => this.onChange('link', event)}
                 fullWidth/>
             <TextField
                 multiline
-                margin="dense"
-                id="description"
-                label="Description"
-                type="description"
+                label={"Description"}
+                variant={"outlined"}
                 value={this.props.selected.description}
                 onChange={(event) => this.onChange('description', event)}
                 fullWidth/>
-        </div>
+        </Paper>
     )
 }
 
@@ -45,7 +51,7 @@ const mapStateToProps = (state) => ({
     fields: state.movie.fields
 });
 
-export const MovieEditor = connect(mapStateToProps, {changeMovie})(MovieEditorClass);
+export const MovieEditor = withStyles(useStyles)(connect(mapStateToProps, {changeMovie})(MovieEditorClass));
 
 MovieEditor.propTypes = {
     selected: PropTypes.object,

@@ -1,4 +1,4 @@
-import {SET_USERNAME, USER_JOIN} from "../action/userActions";
+import {SET_USERNAME, USER_ID, USER_JOIN, USER_LEAVE} from "../action/userActions";
 
 const initialState = {
     users: {},
@@ -17,6 +17,15 @@ export const usersReducer = (state = initialState, action) => {
                     image: action.image
                 }
             };
+        case USER_ID:
+            return {
+                ...state,
+                loggedIn: true,
+                currentUser: {
+                    ...state.currentUser,
+                    id: action.id
+                }
+            };
         case USER_JOIN:
             return {
                 ...state,
@@ -28,6 +37,9 @@ export const usersReducer = (state = initialState, action) => {
                     }
                 }
             };
+        case USER_LEAVE:
+            delete state.users[action.id];
+            return {...state};
         default:
             return state;
     }

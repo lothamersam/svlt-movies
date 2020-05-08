@@ -1,8 +1,8 @@
 import axios from "axios";
-import {emitChange, emitMovieJoin} from "../socket/movieSocketHandler";
+import {emitChange, emitFocus, emitMovieJoin} from "../socket/movieSocketHandler";
 
 export const CHANGE = "CHANGE";
-export const ON_FOCUS = "ON_FOCUS";
+export const FOCUS = "ON_FOCUS";
 export const ON_ADD = "ON_ADD";
 export const ON_DELETE = "ON_DELETE";
 
@@ -57,10 +57,42 @@ export const selectMovie = (id) => {
 };
 
 export const NEW_CRITERIA = "NEW_CRITERIA";
+export const CHANGE_CRITERIA = "CHANGE_CRITERIA";
+export const FOCUS_CRITERIA = "FOCUS_CRITERIA";
 
 export const newCriteria = (data) => {
     return (dispatch) => {
         dispatch({type: NEW_CRITERIA, ...data})
+    }
+};
+
+export const changeCriteria = (id, field, value, received) => {
+    return (dispatch) => {
+        dispatch({
+            type: CHANGE_CRITERIA,
+            id,
+            field,
+            value
+        });
+
+        if (!received) {
+            emitChange(id, 1, field, value);
+        }
+    }
+};
+
+export const focusCriteria = (value, newValue, id, received) => {
+    return (dispatch) => {
+        dispatch({
+            type: FOCUS_CRITERIA,
+            value,
+            newValue,
+            id
+        });
+
+        if (!received) {
+            emitFocus(1, value, newValue, id);
+        }
     }
 };
 

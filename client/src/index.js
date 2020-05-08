@@ -19,7 +19,10 @@ const darkTheme = createMuiTheme({
 ReactDOM.render(
     <Provider store={store}>
         <MuiThemeProvider theme={darkTheme}>
-            <SnackbarProvider>
+            <SnackbarProvider anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}>
                 <CssBaseline/>
                 <MainContainer/>
             </SnackbarProvider>

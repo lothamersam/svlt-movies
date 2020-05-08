@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import {withSnackbar} from "notistack";
 import Skeleton from "@material-ui/lab/Skeleton";
 import {Movie} from "../component/movie/Movie";
+import {FAB} from "../component/FAB";
 
 class MainContainerClass extends React.Component {
     constructor(props) {
@@ -24,12 +25,15 @@ class MainContainerClass extends React.Component {
     componentDidMount = () => this.props.getMovies();
 
     render = () => (
-        <UserSubscriber>
-            <LoginDialog/>
-            <MovieDrawer selectMovie={this.props.selectMovie}>
-                {this.props.selected.id ? <Movie/> : <Skeleton/>}
-            </MovieDrawer>
-        </UserSubscriber>
+        <div>
+            <UserSubscriber>
+                <LoginDialog/>
+                <MovieDrawer selectMovie={this.props.selectMovie}>
+                    {this.props.selected.id ? <Movie/> : <Skeleton/>}
+                </MovieDrawer>
+            </UserSubscriber>
+            <FAB/>
+        </div>
     )
 }
 

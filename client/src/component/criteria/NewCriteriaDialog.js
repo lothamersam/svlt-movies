@@ -14,6 +14,7 @@ export const NewCriteriaDialog = (props) => {
     const id = useSelector(state => state.movie.selected.id);
 
     const onClose = () => {
+        setName('');
         addNewCriteria(id, name);
         props.onClose()
     };
@@ -23,10 +24,8 @@ export const NewCriteriaDialog = (props) => {
         <form>
             <DialogContent>
                 <TextField
-                    margin="dense"
-                    id="name"
                     label="Criteria Title"
-                    type="text"
+                    variant={"outlined"}
                     value={name}
                     onChange={event => setName(event.target.value)}
                     fullWidth

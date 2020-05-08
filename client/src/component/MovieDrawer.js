@@ -16,11 +16,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
-import QueuePlayNextIcon from '@material-ui/icons/QueuePlayNext';
-import {NewMovieDialog} from "./movie/NewMovieDialog";
 import Avatar from "@material-ui/core/Avatar";
-import AvatarGroup from "@material-ui/lab/AvatarGroup";
-import Tooltip from "@material-ui/core/Tooltip";
+import {UserList} from "./user/UserList";
 
 const drawerWidth = 300;
 
@@ -81,18 +78,13 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
         marginLeft: 0,
-    },
-    avatar: {
-        border: "1.5px solid #ffffff"
     }
 }));
 
 export const MovieDrawer = (props) => {
     const classes = useStyles();
-    const [adding, setAdding] = React.useState(false);
     const [open, setOpen] = React.useState(true);
     const {movies, selected} = useSelector(state => state.movie);
-    const {currentUser, users} = useSelector(state => state.users);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -107,70 +99,53 @@ export const MovieDrawer = (props) => {
         props.selectMovie(key)
     };
 
-    return (
-        <div className={classes.root}>
-            <CssBaseline/>
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {[classes.appBarShift]: open,})}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton, open && classes.hide)}>
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        {selected.name ? selected.name : 'Select a movie'}
-                    </Typography>
-                    <div className={classes.grow}/>
-                    <AvatarGroup max={2} classes={{avatar: classes.avatar}}>
-                        <Tooltip title={currentUser.name}>
-                            <Avatar src={currentUser.image} alt={currentUser.name}/>
-                        </Tooltip>
-                        {Object.entries(users).map(e => (
-                            <Tooltip title={e[1].name}>
-                                <Avatar key={e[1]} src={e[1].image} alt={e[1].name}/>
-                            </Tooltip>
-                        ))}
-                    </AvatarGroup>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor="left"
-                open={open}
-                classes={{paper: classes.drawerPaper}}>
-                <div className={classes.drawerHeader}>
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon/>
-                    </IconButton>
-                </div>
-                <Divider/>
-                <List>
-                    <ListItem button onClick={() => setAdding(true)}>
-                        <ListItemIcon><QueuePlayNextIcon/></ListItemIcon>
-                        <ListItemText primary={"Add new movie"}/>
+    return <div className={classes.root}>
+        <CssBaseline/>
+        <AppBar
+            position="fixed"
+            className={clsx(classes.appBar, {[classes.appBarShift]: open,})}>
+            <Toolbar>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start"
+                    className={clsx(classes.menuButton, open && classes.hide)}>
+                    <MenuIcon/>
+                </IconButton>
+                <Typography variant="h6" noWrap>
+                    {selected.name ? selected.name : 'Select a movie'}
+                </Typography>
+                <div className={classes.grow}/>
+                <UserList/>
+            </Toolbar>
+        </AppBar>
+        <Drawer
+            className={classes.drawer}
+            variant="persistent"
+            anchor="left"
+            open={open}
+            classes={{paper: classes.drawerPaper}}>
+            <div className={classes.drawerHeader}>
+                <IconButton onClick={handleDrawerClose}>
+                    <ChevronLeftIcon/>
+                </IconButton>
+            </div>
+            <Divider/>
+            <List>
+                {Object.entries(movies).map(([key, value]) => (
+                    <ListItem button key={key} onClick={() => onClick(key)}>
+                        <ListItemIcon><Avatar src={value.image} alt={value.name}/></ListItemIcon>
+                        <ListItemText primary={value.name}/>
                     </ListItem>
-                    <Divider/>
-                    {Object.entries(movies).map(([key, value]) => (
-                        <ListItem button key={key} onClick={() => onClick(key)}>
-                            <ListItemIcon><Avatar src={value.image} alt={value.name}/></ListItemIcon>
-                            <ListItemText primary={value.name}/>
-                        </ListItem>
-                    ))}
-                </List>
-            </Drawer>
-            <NewMovieDialog open={adding} onClose={() => setAdding(false)}/>
-            <main className={clsx(classes.content, {[classes.contentShift]: open,})}>
-                <div className={classes.drawerHeader}/>
-                {props.children}
-            </main>
-        </div>
-    );
+                ))}
+            </List>
+        </Drawer>
+        <main className={clsx(classes.content, {[classes.contentShift]: open,})}>
+            <div className={classes.drawerHeader}/>
+            {props.children}
+        </main>
+    </div>;
 };
 
 MovieDrawer.propTypes = {

@@ -1,4 +1,12 @@
-import {CHANGE, GET_MOVIES, NEW_CRITERIA, NEW_MOVIE, SELECT_MOVIE} from "../action/movieActions";
+import {
+    CHANGE,
+    CHANGE_CRITERIA,
+    FOCUS_CRITERIA,
+    GET_MOVIES,
+    NEW_CRITERIA,
+    NEW_MOVIE,
+    SELECT_MOVIE
+} from "../action/movieActions";
 
 const initialState = {
     selected: {},
@@ -47,6 +55,46 @@ const newEntry = (key, state, action) => {
     };
 };
 
+const changeCriteria = (state, action) => ({
+    ...state,
+    fields: {
+        ...state.fields,
+        [action.id]: {
+            ...state.fields[action.id],
+            [action.field]: action.value
+        }
+    }
+});
+
+const appendUser = (state, action) => ({
+    ...state,
+    fields: {
+        ...state.fields,
+        [action.newValue]: {
+            ...state.fields[action.newValue],
+            users: {
+                ...state.fields[action.newValue].users,
+                [action.id]: true
+            }
+        }
+    }
+});
+
+const focusCriteria = (state, action) => {
+    if (state.fields[action.value].users) {
+        delete state.fields[action.value].users[action.id];
+        if (Object.keys(state.fields[action.value].users).length === 0) {
+            delete state.fields[action.value].users
+        }
+    }
+
+    if (action.newValue > 0) {
+        return appendUser(state, action);
+    } else {
+        return state
+    }
+};
+
 export const movieReducer = (state = initialState, action) => {
     switch (action.type) {
         case NEW_MOVIE:
@@ -62,6 +110,10 @@ export const movieReducer = (state = initialState, action) => {
             return change(state, action);
         case NEW_CRITERIA:
             return newEntry('fields', state, action);
+        case CHANGE_CRITERIA:
+            return changeCriteria(state, action);
+        case FOCUS_CRITERIA:
+            return focusCriteria(state, action);
         default:
             return state;
     }

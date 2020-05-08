@@ -8,8 +8,18 @@ import Dialog from "@material-ui/core/Dialog";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 import {addNewMovie} from "../../action/movieActions";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        '& > *': {
+            margin: theme.spacing(1, 0)
+        }
+    }
+}));
 
 export const NewMovieDialog = (props) => {
+    const classes = useStyles();
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
     const user = useSelector(state => state.users.currentUser.name);
@@ -22,21 +32,17 @@ export const NewMovieDialog = (props) => {
     return <Dialog open={props.open} onClose={() => props.onClose()} keepMounted={false}>
         <DialogTitle>Add New Movie</DialogTitle>
         <form>
-            <DialogContent>
+            <DialogContent className={classes.root}>
                 <TextField
-                    margin="dense"
-                    id="name"
-                    label="Movie Title"
-                    type="text"
+                    label={"Movie Title"}
+                    variant={"outlined"}
                     value={name}
                     onChange={event => setName(event.target.value)}
                     fullWidth
                     required/>
                 <TextField
-                    margin="dense"
-                    id="image"
                     label="Image URL"
-                    type="text"
+                    variant={"outlined"}
                     value={image}
                     onChange={event => setImage(event.target.value)}
                     fullWidth/>

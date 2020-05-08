@@ -8,8 +8,18 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import {useDispatch, useSelector} from "react-redux";
 import {setUsername} from "../action/userActions";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        '& > *': {
+            margin: theme.spacing(1, 0)
+        }
+    }
+}));
 
 export const LoginDialog = () => {
+    const classes = useStyles();
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
     const loggedIn = useSelector(state => state.users.loggedIn);
@@ -17,23 +27,19 @@ export const LoginDialog = () => {
 
     return <Dialog open={!loggedIn}>
         <DialogTitle>Enter your stuff!</DialogTitle>
-        <DialogContent>
+        <DialogContent className={classes.root}>
             <DialogContentText>
                 Pick something fun!
             </DialogContentText>
             <TextField
-                margin="dense"
-                id="name"
-                label="Name"
-                type="name"
+                label={"Name"}
+                variant={"outlined"}
                 value={name}
                 onChange={event => setName(event.target.value)}
                 fullWidth/>
             <TextField
-                margin="dense"
-                id="name"
-                label="Profile Image"
-                type="name"
+                label={"Profile Image"}
+                variant={"outlined"}
                 value={image}
                 onChange={event => setImage(event.target.value)}
                 fullWidth/>
